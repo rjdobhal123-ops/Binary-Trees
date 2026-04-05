@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class Binary_tree_implementation {
@@ -12,7 +14,7 @@ class Binary_tree_implementation {
         }
     }
 
-    private Node root;
+     Node root;
 
     //Inserting nodes
      public void insert(Scanner sc){
@@ -54,4 +56,54 @@ class Binary_tree_implementation {
         display(node.left);
         display(node.right);
      }
+
+
+     //Preorder traversal
+     public List<Integer> preorderTraversal(Node root) {
+         List<Integer> ans =new ArrayList<>();
+         preorder(root,ans);
+         return ans;
+     }
+
+    public void preorder(Node root,List<Integer> list){
+        if(root==null)
+            return;
+
+        list.add(root.value);
+        preorder(root.left,list);
+        preorder(root.right,list);
+    }
+
+    //PostOrder traversal
+    public List<Integer> postorderTraversal(Node root) {
+        List<Integer> ans =new ArrayList<>();
+        postorder(root,ans);
+        return ans;
+    }
+
+    public void postorder(Node root,List<Integer> list){
+        if(root==null)
+            return;
+
+        postorder(root.left,list);
+        postorder(root.right,list);
+        list.add(root.value);
+    }
+
+    //In-Order traversal
+    public List<Integer> inorderTraversal(Node root) {
+        List<Integer> ans =new ArrayList<>();
+        inorder(root,ans);
+        return ans;
+    }
+
+    public void inorder(Node root,List<Integer> list){
+        if(root==null)
+            return;
+
+        postorder(root.left,list);
+        list.add(root.value);
+        postorder(root.right,list);
+
+    }
 }
