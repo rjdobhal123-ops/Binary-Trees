@@ -101,9 +101,9 @@ class Binary_tree_implementation {
         if(root==null)
             return;
 
-        postorder(root.left,list);
+        inorder(root.left,list);
         list.add(root.value);
-        postorder(root.right,list);
+        inorder(root.right,list);
 
     }
 }
