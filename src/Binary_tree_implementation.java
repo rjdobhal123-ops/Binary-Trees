@@ -129,4 +129,69 @@ class Binary_tree_implementation {
         }
         return ans;
     }
+
+
+    //Iterative methods
+
+    //Iterative preorder
+    public List<Integer> itpreorder(Node root){
+         List<Integer> preorder=new ArrayList<>();
+         if (root==null)
+             return preorder;
+
+         Stack<Node> st=new Stack<>();
+         st.push(root);
+
+         while (!st.isEmpty()){
+             root=st.pop();
+             preorder.add(root.value);
+
+             if (root.right!=null)
+                 st.push(root.right);
+
+             if (root.left!=null)
+                 st.push(root.left);
+
+         }
+         return preorder;
+    }
+
+    //Iterative inorder
+    public List<Integer> itinorder(Node root){
+        List<Integer> inorder=new ArrayList<>();
+        if (root==null)
+            return inorder;
+        Stack<Node> st=new Stack<>();
+        Node node=root;
+
+        while(true){
+            if (node!=null){
+                st.push(node);
+                node=node.left;
+            }else{
+                if (st.isEmpty())
+                    break;
+
+                node=st.pop();
+                inorder.add(node.value);
+                node=node.right;
+            }
+        }
+        return inorder;
+    }
+
+    //Postorder traversal using 2 stacks
+    public List<Integer> postorder2stack(Node root){
+         List<Integer> postorder=new ArrayList<>();
+         if (root==null)
+             return postorder;
+
+         Stack<Node> st1=new Stack<>();
+         Stack<Node> st2=new Stack<>();
+
+
+
+
+         return postorder;
+    }
 }
