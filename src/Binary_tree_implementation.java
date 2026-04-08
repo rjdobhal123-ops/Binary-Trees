@@ -350,4 +350,132 @@ class Binary_tree_implementation {
         return (p.value==q.value) && isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
     }
 
+
+    //Max path sum
+
+     public int maxPathSum(Node root) {
+        int[] maxvalue=new int[1];
+        maxvalue[0]=Integer.MIN_VALUE;
+        maxPathheight(root,maxvalue);
+        return maxvalue[0];
+    }
+
+    public int maxPathheight(Node root,int[] maxvalue){
+         if (root==null)
+             return 0;
+
+         int lsum=Math.max(0,maxPathheight(root.left,maxvalue));
+         int rsum=Math.max(0,maxPathheight(root.right,maxvalue));
+
+         maxvalue[0]=Math.max(maxvalue[0],lsum+rsum+root.value);
+
+         return Math.max(lsum,rsum)+root.value;
+    }
+
+
+    //Zig-Zag level order traversal
+
+    public List<List<Integer>> zigzagLevelOrder(Node root) {
+        List<List<Integer>> ans=new ArrayList<>();
+        if(root==null)
+            return ans;
+
+        Queue<Node> q=new ArrayDeque<>();
+        q.offer(root);
+
+        boolean lefttoRight=true;
+
+        while(!q.isEmpty()){
+            int size=q.size();
+            Integer[] level=new Integer[size];
+
+            for(int i=0;i<size;i++){
+                Node node=q.poll();
+                int index=lefttoRight?i:size-1-i;
+                level[index]=node.value;
+
+                if(node.left!=null)
+                    q.add(node.left);
+
+                if(node.right!=null)
+                    q.add(node.right);
+            }
+            lefttoRight=!lefttoRight;
+            ans.add(Arrays.asList(level));
+        }
+        return ans;
+    }
+
+
+    //Boundary traversal
+
+    boolean isLeaf(Node root) {
+        return root.left == null && root.right == null;
+    }
+    // left boundary of the tree
+    void addLeftBoundary(Node root, List<Integer> res) {
+        Node curr = root.left;
+        while (curr != null) {
+            if (!isLeaf(curr)) {
+                res.add(curr.value);
+            }
+
+            if (curr.left != null) {
+                curr = curr.left;
+            } else {
+                curr = curr.right;
+            }
+        }
+    }
+    // right boundary of the tree
+    void addRightBoundary(Node root, List<Integer> res) {
+        Node curr = root.right;
+        List<Integer> temp = new ArrayList<>();
+        while (curr != null) {
+            if (!isLeaf(curr)) {
+                temp.add(curr.value);
+            }
+            if (curr.right != null) {
+                curr = curr.right;
+            } else {
+                curr = curr.left;
+            }
+        }
+        // Reverse and add the values
+        for (int i = temp.size() - 1; i >= 0; --i) {
+            res.add(temp.get(i));
+        }
+    }
+
+    // leaves of the tree
+    void addLeaves(Node root, List<Integer> res) {
+        if (isLeaf(root)) {
+            res.add(root.value);
+            return;
+        }
+        if (root.left != null) {
+            addLeaves(root.left, res);
+        }
+        if (root.right != null) {
+            addLeaves(root.right, res);
+        }
+    }
+    List<Integer> printBoundary(Node root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        if (!isLeaf(root)) {
+            res.add(root.value);
+        }
+
+        // Add the left boundary, leaves,
+        // and right boundary in order
+        addLeftBoundary(root, res);
+        addLeaves(root, res);
+        addRightBoundary(root, res);
+
+        return res;
+    }
 }
