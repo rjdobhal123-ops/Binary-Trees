@@ -289,4 +289,65 @@ class Binary_tree_implementation {
             }
         }
     }
+
+
+    public int maxdepth(Node root){
+        if (root==null)
+            return 0;
+
+        int lh=maxdepth(root.left);
+        int rh=maxdepth(root.right);
+
+        return 1+Math.max(lh,rh);
+     }
+
+
+
+     public boolean heightbalanced(Node root){
+         return balancedtree(root)!=-1;
+     }
+     public int balancedtree(Node root){
+         if (root==null)
+             return 0;
+
+         int lh=balancedtree(root.left);
+         if (lh==-1) return -1;
+         int rh=balancedtree(root.right);
+        if (rh==-1) return -1;
+
+        if (Math.abs(lh-rh)>1) return -1;
+
+        return Math.max(lh,rh)+1;
+     }
+
+
+     //Diameter of the binary tree
+
+     public int diameterOfBinaryTree(Node root) {
+         int[] diameter=new int[1];
+         height(root,diameter);
+         return diameter[0];
+     }
+
+    public int height(Node root,int [] diameter){
+        if(root==null)
+            return 0;
+
+        int lh=height(root.left,diameter);
+        int rh=height(root.right,diameter);
+
+        diameter[0]=Math.max(diameter[0],lh+rh);
+
+        return Math.max(lh,rh)+1;
+    }
+
+
+    //Identical Tree
+    public boolean isSameTree(Node p, Node q) {
+        if(p==null || q==null)
+            return p==q;
+
+        return (p.value==q.value) && isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
+    }
+
 }
