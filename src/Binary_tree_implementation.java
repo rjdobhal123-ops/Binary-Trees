@@ -478,4 +478,103 @@ class Binary_tree_implementation {
 
         return res;
     }
+
+    //Top view of the tree
+    public List<Integer> topview(Node root){
+         List<Integer> ans=new ArrayList<>();
+         if (root==null)
+             return ans;
+
+         class Pair{
+             Node node;
+             int hd;
+
+             Pair(Node root,int hd){
+                 this.node=root;
+                 this.hd=hd;
+             }
+         }
+
+         Map<Integer,Integer> map=new TreeMap<>();
+         Queue<Pair> q=new LinkedList<>();
+         q.add(new Pair(root,0));
+
+         while(!q.isEmpty()){
+             Pair it=q.poll();
+             int hd=it.hd;
+             Node temp=it.node;
+
+             if (map.get(hd)==null)
+                 map.put(hd,temp.value);
+
+             if (temp.left!=null)
+                 q.add(new Pair(temp.left,hd-1));
+             if(temp.right!=null)
+                 q.add(new Pair(temp.right,hd+1));
+         }
+
+         for (Map.Entry<Integer,Integer> entry: map.entrySet()){
+             ans.add(entry.getValue());
+         }
+         return ans;
+    }
+
+
+    //Bottom view of the tree
+    public List<Integer> bottomview(Node root){
+        List<Integer> ans=new ArrayList<>();
+        if (root==null)
+            return ans;
+
+        class Pair{
+            Node node;
+            int hd;
+
+            Pair(Node root,int hd){
+                this.node=root;
+                this.hd=hd;
+            }
+        }
+
+        Map<Integer,Integer> map=new TreeMap<>();
+        Queue<Pair> q=new LinkedList<>();
+        q.add(new Pair(root,0));
+
+        while(!q.isEmpty()){
+            Pair it=q.poll();
+            int hd=it.hd;
+            Node temp=it.node;
+
+                map.put(hd,temp.value);
+
+            if (temp.left!=null)
+                q.add(new Pair(temp.left,hd-1));
+            if(temp.right!=null)
+                q.add(new Pair(temp.right,hd+1));
+        }
+
+        for (Map.Entry<Integer,Integer> entry: map.entrySet()){
+            ans.add(entry.getValue());
+        }
+        return ans;
+    }
+
+
+    //Right view of the tree
+    public List<Integer> rightSideView(Node root) {
+        List<Integer> ans=new ArrayList<>();
+        rightView(root,0,ans);
+        return ans;
+    }
+
+    public void rightView(Node root,int level,List<Integer> ans){
+        if(root==null)
+            return;
+
+        if(level==ans.size())
+            ans.add(root.value);
+
+        rightView(root.right,level+1,ans);
+        rightView(root.left,level+1,ans);
+    }
 }
