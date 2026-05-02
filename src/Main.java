@@ -28,6 +28,8 @@ public class Main {
 //        System.out.println(bt.postorder1stack(bt.root));
 
         System.out.println(bt.maxdepth(bt.root));
+        BInaryTreeQuestionfurther obj=new BInaryTreeQuestionfurther();
+        System.out.println(obj.timeToBurnTree(bt.root,2));
 
     }
     }

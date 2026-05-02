@@ -2,7 +2,7 @@ import java.security.KeyPair;
 import java.util.*;
 
 class Binary_tree_implementation {
-    private class Node {
+    class Node {
         int value;
         Node left;
         Node right;
@@ -576,5 +576,20 @@ class Binary_tree_implementation {
 
         rightView(root.right,level+1,ans);
         rightView(root.left,level+1,ans);
+    }
+
+
+    public boolean isSymmetric(Node root) {
+        return (root==null || isSymmetrichelp(root.left,root.right));
+    }
+
+    public boolean isSymmetrichelp(Node left, Node right){
+        if(left==null || right==null)
+            return left==right;
+
+        if(left.value!=right.value)
+            return false;
+
+        return isSymmetrichelp(left.left,right.right) && isSymmetrichelp(left.right,right.left);
     }
 }
