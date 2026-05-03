@@ -116,4 +116,59 @@ public class BInaryTreeQuestionfurther extends Binary_tree_implementation {
         return root;
     }
 
+
+
+    //Question-->297
+
+    // Encodes a tree to a single string.
+    public String serialize(Node root) {
+        if (root==null)
+            return "";
+
+        Queue<Node> q=new LinkedList<>();
+        StringBuilder res=new StringBuilder();
+
+        q.add(root);
+
+        while(!q.isEmpty()){
+            Node node=q.poll();
+            if (node==null){
+                res.append("# ");
+                continue;
+            }
+            res.append(node.value+" ");
+            q.add(node.left);
+            q.add(node.right);
+        }
+        return res.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public Node deserialize(String data) {
+        if (data=="")
+            return null;
+
+        Queue<Node> q=new LinkedList<>();
+        String[] values=data.split(" ");
+        Node root=new Node(Integer.parseInt(values[0]));
+        q.add(root);
+
+        for (int i = 1; i < values.length; i++) {
+            Node parent=q.poll();
+
+            if (!values[i].equals("#")){
+                Node left=new Node(Integer.parseInt(values[i]));
+                parent.left=left;
+                q.add(left);
+            }
+
+            if (!values[++i].equals("#")){
+                Node right=new Node(Integer.parseInt(values[i]));
+                parent.right=right;
+                q.add(right);
+            }
+        }
+        return root;
+    }
+
 }
