@@ -51,4 +51,69 @@ public class BInaryTreeQuestionfurther extends Binary_tree_implementation {
         buildgraph(node.right, node, graph);
     }
 
+
+
+    //Question 222
+    public int countNodes(Node root) {
+        if(root==null)
+            return 0;
+
+        int left=getHeightLeft(root);
+        int right=getHeightRight(root);
+
+        if(left==right){
+            return (1<<left)-1;
+        }
+
+        return 1+countNodes(root.left)+countNodes(root.right);
+
+    }
+
+    private int getHeightLeft(Node root){
+        int count=0;
+        while(root!=null){
+            count++;
+            root=root.left;
+        }
+        return count;
+    }
+
+    private int getHeightRight(Node root){
+        int count=0;
+        while(root!=null){
+            count++;
+            root=root.right;
+        }
+        return count;
+    }
+
+
+    //Question-->106
+    public Node buildTree(int[] inorder, int[] postorder) {
+        if(inorder.length!=postorder.length)
+            return null;
+
+        Map<Integer,Integer> inMap=new HashMap<>();
+        for(int i=0;i<inorder.length;i++){
+            inMap.put(inorder[i],i);
+        }
+
+        return build(inorder,0,inorder.length-1,postorder,0,postorder.length-1,inMap);
+    }
+
+    private Node build(int[] inorder,int inStart,int inEnd,int[] postorder,int postStart,int postEnd, Map<Integer,Integer> inMap){
+        if(postStart>postEnd || inStart>inEnd)
+            return null;
+
+        Node root=new Node(postorder[postEnd]);
+        int inRoot=inMap.get(postorder[postEnd]);
+        int numsLeft=inRoot-inStart;
+
+        root.left=build(inorder,inStart,inRoot-1,postorder,postStart,postStart+numsLeft-1,inMap);
+
+        root.right=build(inorder,inRoot+1,inEnd,postorder,postStart+numsLeft,postEnd-1,inMap);
+
+        return root;
+    }
+
 }
