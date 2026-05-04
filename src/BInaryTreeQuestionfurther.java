@@ -171,4 +171,67 @@ public class BInaryTreeQuestionfurther extends Binary_tree_implementation {
         return root;
     }
 
+
+    //Morris Traversal algorithm-->S.C.=O(1)
+
+    //Morris Inorder traversal
+    public List<Integer> morrisinorder(Node root){
+        List<Integer> inorder=new ArrayList<>();
+        if (root==null)
+            return inorder;
+
+        Node curr=root;
+
+        while(curr!=null){
+            if (curr.left==null){
+                inorder.add(curr.value);
+                curr=curr.right;
+            }else{
+                Node pred=curr.left;
+                while(pred.right!=null && pred.right!=curr)
+                    pred=pred.right;
+
+                if (pred.right==null){
+                    pred.right=curr;
+                    curr=curr.left;
+                }else{
+                    pred.right=null;
+                    inorder.add(curr.value);
+                    curr=curr.right;
+                }
+            }
+        }
+        return inorder;
+    }
+
+    //Morris preorder traversal
+    public List<Integer> morrispreorder(Node root){
+        List<Integer> preorder=new ArrayList<>();
+        if (root==null)
+            return preorder;
+
+        Node curr=root;
+
+        while(curr!=null){
+            if (curr.left==null){
+                preorder.add(curr.value);
+                curr=curr.right;
+            }else{
+                Node pred=curr.left;
+                while(pred.right!=null && pred.right!=curr)
+                    pred=pred.right;
+
+                if (pred.right==null){
+                    preorder.add(curr.value);
+                    pred.right=curr;
+                    curr=curr.left;
+                }else{
+                    pred.right=null;
+                    curr=curr.right;
+                }
+            }
+        }
+        return preorder;
+    }
+
 }
