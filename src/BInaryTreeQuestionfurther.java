@@ -234,4 +234,28 @@ public class BInaryTreeQuestionfurther extends Binary_tree_implementation {
         return preorder;
     }
 
+
+    //Flatten the binary tree into linkedlist
+
+    public void flatten(Node root) {
+        if(root==null)
+            return;
+
+        Node curr=root;
+        Node prev=null;
+
+        while(curr!=null){
+            if (curr.left!=null){
+               prev=curr.left;
+               while(prev.right!=null)
+                   prev=prev.right;
+
+               prev.right=curr.right;
+               curr.right=curr.left;
+               curr.left=null;
+            }
+            curr=curr.right;
+        }
+    }
+
 }
