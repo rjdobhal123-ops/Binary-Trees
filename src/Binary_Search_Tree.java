@@ -122,4 +122,55 @@ public class Binary_Search_Tree extends Binary_tree_implementation {
         }
         return -1;
     }
+
+    //Validate BST or not
+    public boolean isValidBST(Node root) {
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean isValidBST(Node root, long minVal, long maxVal){
+        if(root==null)
+            return true;
+
+        if( root.value>=maxVal || root.value<=minVal)
+            return false;
+
+        return isValidBST(root.left, minVal, root.value) && isValidBST(root.right, root.value, maxVal);
+    }
+
+
+    //Lowest Common Ancestor
+    public Node lowestCommonAncestor(Node root, Node p, Node q){
+
+        Node curr=root;
+        while(curr!=null){
+            if(p.value<curr.value && q.value<curr.value)
+                curr=curr.left;
+            else if(p.value>curr.value && q.value>curr.value)
+                curr=curr.right;
+            else
+                return curr;
+        }
+        return null;
+    }
+
+
+    //Constructing BST using preorder traversal
+    public Node bstFromPreorder(int[] preorder) {
+        return build(preorder, new int[]{0}, Integer.MAX_VALUE);
+    }
+
+    private Node build(int[] preorder, int[] index, int bound){
+        if (index[0]==preorder.length || preorder[index[0]]>bound){
+            return null;
+        }
+
+        root=new Node(preorder[index[0]++]);
+
+        root.left=build(preorder, index, root.value);
+        root.right=build(preorder, index, bound);
+
+        return root;
+
+    }
 }
